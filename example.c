@@ -9,10 +9,10 @@ int main() {
     arr.push(&arr, 67);
     arr.push(&arr, 69);
 
-    fsrange(0, arr.length) {
+    fsrange(0, arr.count) {
         printf("%d -> %d\n", i, arr.data[i]);
     }
 
     arr.pop(&arr);
-    printf("Total: %ld\n", arr.length);
+    printf("Total: %ld\n", arr.count);
 }

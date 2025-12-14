@@ -9,6 +9,7 @@
         TYPE *data; \
         size_t capacity; \
         size_t count; \
+        size_t length; \
         void (*push)(NAME*, TYPE); \
         TYPE (*pop)(NAME*); \
         void (*free)(NAME*); \
@@ -19,11 +20,13 @@
             self->data = realloc(self->data, self->capacity * sizeof(TYPE)); \
         } \
         self->data[self->count++] = item; \
+        self->length++; \
     } \
     static inline TYPE NAME##_pop(NAME *self) { \
         if (self->count == 0) { \
             raise_from("IndexError", "Cannot pop from empty array"); \
         } \
+        self->length--;\
         return self->data[--self->count]; \
     } \
     static inline void NAME##_free(NAME *self) {\
@@ -36,6 +39,7 @@
         self.push = NAME##_push; \
         self.pop = NAME##_pop; \
         self.free = NAME##_free; \
+        self.length = 0;\
         return self; \
     } \
 

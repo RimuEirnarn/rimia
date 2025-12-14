@@ -1,7 +1,7 @@
-#ifndef RIMIA_DA
+#ifndef RIMIA_DA_H
 #include <stdlib.h>
 #include "rimia_err.h"
-#define RIMIA_DA
+#define RIMIA_DA_H
 
 #define DEFINE_DA(TYPE, NAME) \
     typedef struct NAME NAME; \
@@ -17,6 +17,9 @@
         if (self->capacity == self->count) {\
             self->capacity = self->capacity ? self->capacity * 2 : 4; \
             self->data = realloc(self->data, self->capacity * sizeof(TYPE)); \
+            TYPE *tmp = realloc(self->data, self->capacity * sizeof(TYPE)); \
+            if (!tmp) raise_from("MemoryError", "Realloc failed");\
+            self->data = tmp;\
         } \
         self->data[self->count++] = item; \
     } \
@@ -38,5 +41,8 @@
         self.free = NAME##_free; \
         return self; \
     } \
+
+#define foreach_varda(var, self) for (size_t var = 0; (var) < self.count; ++(var))
+#define foreach_da(self) for (size_t i = 0; i < (self).count; i++)
 
 #endif

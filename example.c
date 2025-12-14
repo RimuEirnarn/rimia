@@ -9,10 +9,14 @@ int main() {
     arr.push(&arr, 67);
     arr.push(&arr, 69);
 
-    fsrange(0, arr.count) {
-        printf("%d -> %d\n", i, arr.data[i]);
+    frange(50) {
+        arr.push(&arr, i);
+    }
+    printf("Total: %ld\n", arr.count);
+
+    foreach_varda(itercount, arr) {
+        printf("%zu -> %d\n", itercount, arr.data[itercount]);
     }
 
     arr.pop(&arr);
-    printf("Total: %ld\n", arr.count);
 }
